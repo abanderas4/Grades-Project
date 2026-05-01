@@ -3,12 +3,10 @@ from PyQt6.QtWidgets import *
 from gui import *
 import os
 
-#Docstrings for all functions.
-#Type hinting for all function headers.
-
-
 class Grades(QMainWindow, Ui_MainWindow):
-    def __init__(self):
+    def __init__(self) -> None:
+        """method that initializes the UI and
+        creates csv file if csv file doesn't exist"""
         super().__init__()
         self.setupUi(self)
         self.setupUi(self)
@@ -24,7 +22,9 @@ class Grades(QMainWindow, Ui_MainWindow):
                 writer.writerow(["Name", "Score1", "Score2", "Score3", "Score4", 'Final'])
 
 
-    def hidden(self):
+    def hidden(self) -> None:
+        """method that hides score labels, input boxes, and clears text
+        inside input boxes"""
         self.Score_1.hide()
         self.Score1_input.hide()
         self.Score1_input.clear()
@@ -43,7 +43,8 @@ class Grades(QMainWindow, Ui_MainWindow):
 
         self.submit_button.hide()
 
-    def submit(self):
+    def submit(self) -> None:
+        """method that validates and appends data to csv file"""
         with open('grades.csv', 'a', newline= '') as grades_file:
             writer = csv.writer(grades_file)
 
@@ -82,46 +83,48 @@ class Grades(QMainWindow, Ui_MainWindow):
 
             self.hidden()
 
-    def enter(self):
-            self.hidden()
+    def enter(self) -> None:
+        """method that validates student name, number of attempts, and shows
+         corresponding input boxes for the number of attempts"""
+        self.hidden()
 
-            if self.Message != "":
-                self.Message.setText('')
+        if self.Message != "":
+            self.Message.setText('')
 
-            try:
-                student_name = self.input_name.text().strip()
-                number_of_attempts = int(self.input_attempt.text().strip())
+        try:
+            student_name = self.input_name.text().strip()
+            number_of_attempts = int(self.input_attempt.text().strip())
 
-                if not student_name.isalpha():
-                    raise ValueError
+            if not student_name.isalpha():
+                raise ValueError
 
-                if not (0 <= number_of_attempts <= 4):
-                    raise ValueError
-
-
-                if number_of_attempts >= 1:
-                    self.Score_1.show()
-                    self.Score1_input.show()
+            if not (0 <= number_of_attempts <= 4):
+                raise ValueError
 
 
-                if number_of_attempts >=2:
-                    self.Score_2.show()
-                    self.Score2_input.show()
+            if number_of_attempts >= 1:
+                self.Score_1.show()
+                self.Score1_input.show()
 
 
-                if number_of_attempts >=3:
-                    self.Score_3.show()
-                    self.Score3_input.show()
-
-                if number_of_attempts == 4:
-                    self.Score_4.show()
-                    self.Score4_input.show()
+            if number_of_attempts >=2:
+                self.Score_2.show()
+                self.Score2_input.show()
 
 
-                self.submit_button.show()
+            if number_of_attempts >=3:
+                self.Score_3.show()
+                self.Score3_input.show()
+
+            if number_of_attempts == 4:
+                self.Score_4.show()
+                self.Score4_input.show()
 
 
-            except ValueError:
-                self.Message.setText("Enter a valid input")
+            self.submit_button.show()
+
+
+        except ValueError:
+            self.Message.setText("Enter a valid input")
 
 
