@@ -101,9 +101,9 @@ class Grades(QMainWindow, Ui_MainWindow):
                 for score in scores:
                     if score.isVisible():
                         text = score.text().strip()
-                        if text == '':
-                            raise ValueError
+
                         value = int(text)
+
                         if not (0 <= value <= 100):
                             raise ValueError
 
