@@ -43,6 +43,51 @@ class Grades(QMainWindow, Ui_MainWindow):
 
         self.submit_button.hide()
 
+
+    def enter(self) -> None:
+        """method that validates student name, number of attempts, and shows
+         corresponding input boxes for the number of attempts"""
+        self.hidden()
+
+        if self.Message != "":
+            self.Message.setText('')
+
+        try:
+            student_name = self.input_name.text().strip()
+            number_of_attempts = int(self.input_attempt.text().strip())
+
+            if not student_name.isalpha():
+                raise ValueError
+
+            if not (1 <= number_of_attempts <= 4):
+                raise ValueError
+
+
+            if number_of_attempts >= 1:
+                self.Score_1.show()
+                self.Score1_input.show()
+
+
+            if number_of_attempts >=2:
+                self.Score_2.show()
+                self.Score2_input.show()
+
+
+            if number_of_attempts >=3:
+                self.Score_3.show()
+                self.Score3_input.show()
+
+            if number_of_attempts == 4:
+                self.Score_4.show()
+                self.Score4_input.show()
+
+
+            self.submit_button.show()
+
+
+        except ValueError:
+            self.Message.setText("Enter a valid input")
+
     def submit(self) -> None:
         """method that validates and appends data to csv file"""
         with open('grades.csv', 'a', newline= '') as grades_file:
@@ -82,49 +127,3 @@ class Grades(QMainWindow, Ui_MainWindow):
             self.input_attempt.clear()
 
             self.hidden()
-
-    def enter(self) -> None:
-        """method that validates student name, number of attempts, and shows
-         corresponding input boxes for the number of attempts"""
-        self.hidden()
-
-        if self.Message != "":
-            self.Message.setText('')
-
-        try:
-            student_name = self.input_name.text().strip()
-            number_of_attempts = int(self.input_attempt.text().strip())
-
-            if not student_name.isalpha():
-                raise ValueError
-
-            if not (0 <= number_of_attempts <= 4):
-                raise ValueError
-
-
-            if number_of_attempts >= 1:
-                self.Score_1.show()
-                self.Score1_input.show()
-
-
-            if number_of_attempts >=2:
-                self.Score_2.show()
-                self.Score2_input.show()
-
-
-            if number_of_attempts >=3:
-                self.Score_3.show()
-                self.Score3_input.show()
-
-            if number_of_attempts == 4:
-                self.Score_4.show()
-                self.Score4_input.show()
-
-
-            self.submit_button.show()
-
-
-        except ValueError:
-            self.Message.setText("Enter a valid input")
-
-
